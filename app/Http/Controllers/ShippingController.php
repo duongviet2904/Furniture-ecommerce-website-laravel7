@@ -117,7 +117,7 @@ class ShippingController extends Controller
     {
         $shipping=Shipping::find($id);
         if($shipping){
-            $status=$shipping->delete();
+            $status=$shipping->update(['status' => 'inactive']);
             if($status){
                 request()->session()->flash('success','Shipping successfully deleted');
             }

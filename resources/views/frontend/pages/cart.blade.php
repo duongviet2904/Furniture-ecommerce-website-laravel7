@@ -123,14 +123,21 @@
 								<div class="right">
 									<ul>
 										<li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>${{number_format(Helper::totalCartPrice(),2)}}</span></li>
-
+                                        @php
+                                            $save=Helper::totalCartPrice();
+                                            if(session()->has('coupon') && $save - Session::get('coupon')['value'] >= 0){
+                                                $save= Session::get('coupon')['value'];
+                                            }
+                                        @endphp
 										@if(session()->has('coupon'))
-										<li class="coupon_price" data-price="{{Session::get('coupon')['value']}}">You Save<span>${{number_format(Session::get('coupon')['value'],2)}}</span></li>
+										<li class="coupon_price" data-price="{{Session::get('coupon')['value']}}">You Save<span>${{number_format($save,2)}}</span></li>
 										@endif
 										@php
 											$total_amount=Helper::totalCartPrice();
-											if(session()->has('coupon')){
+											if(session()->has('coupon') && $total_amount-Session::get('coupon')['value'] >= 0){
 												$total_amount=$total_amount-Session::get('coupon')['value'];
+											} else {
+                                                $total_amount = 0;
 											}
 										@endphp
 										@if(session()->has('coupon'))

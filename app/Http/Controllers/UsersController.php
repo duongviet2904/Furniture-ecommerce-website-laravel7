@@ -105,7 +105,7 @@ class UsersController extends Controller
         // dd($request->all());
         $data=$request->all();
         // dd($data);
-        
+
         $status=$user->fill($data)->save();
         if($status){
             request()->session()->flash('success','Successfully updated');
@@ -126,7 +126,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $delete=User::findorFail($id);
-        $status=$delete->delete();
+        $status=$delete->update(['status' => 'inactive']);
         if($status){
             request()->session()->flash('success','User Successfully deleted');
         }

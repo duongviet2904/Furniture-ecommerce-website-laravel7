@@ -98,7 +98,7 @@ class BrandController extends Controller
             'title'=>'string|required',
         ]);
         $data=$request->all();
-       
+
         $status=$brand->fill($data)->save();
         if($status){
             request()->session()->flash('success','Brand successfully updated');
@@ -119,7 +119,7 @@ class BrandController extends Controller
     {
         $brand=Brand::find($id);
         if($brand){
-            $status=$brand->delete();
+            $status=$brand->update(['status' => 'inactive']);
             if($status){
                 request()->session()->flash('success','Brand successfully deleted');
             }

@@ -137,7 +137,7 @@ class HomeController extends Controller
     public function productReviewDelete($id)
     {
         $review=ProductReview::find($id);
-        $status=$review->delete();
+        $status=$review->update(['status' => 'cancel']);
         if($status){
             request()->session()->flash('success','Successfully deleted review');
         }
@@ -155,7 +155,7 @@ class HomeController extends Controller
     public function userCommentDelete($id){
         $comment=PostComment::find($id);
         if($comment){
-            $status=$comment->delete();
+            $status=$comment->update(['status'=>'inactive']);
             if($status){
                 request()->session()->flash('success','Post Comment successfully deleted');
             }
@@ -220,11 +220,11 @@ class HomeController extends Controller
             'new_password' => ['required'],
             'new_confirm_password' => ['same:new_password'],
         ]);
-   
+
         User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-   
+
         return redirect()->route('user')->with('success','Password successfully changed');
     }
 
-    
+
 }

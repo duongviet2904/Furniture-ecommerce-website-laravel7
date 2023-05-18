@@ -18,7 +18,7 @@ class ProductReviewController extends Controller
     public function index()
     {
         $reviews=ProductReview::getAllReview();
-        
+
         return view('backend.review.index')->with('reviews',$reviews);
     }
 
@@ -29,7 +29,7 @@ class ProductReviewController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -141,7 +141,7 @@ class ProductReviewController extends Controller
     public function destroy($id)
     {
         $review=ProductReview::find($id);
-        $status=$review->delete();
+        $status=$review->update(['status' => 'inactive']);
         if($status){
             request()->session()->flash('success','Successfully deleted review');
         }

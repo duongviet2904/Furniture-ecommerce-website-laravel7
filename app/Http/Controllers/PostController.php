@@ -164,9 +164,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post=Post::findOrFail($id);
-       
-        $status=$post->delete();
-        
+
+        $status=$post->update(['status' => 'inactive']);
+
         if($status){
             request()->session()->flash('success','Post successfully deleted');
         }

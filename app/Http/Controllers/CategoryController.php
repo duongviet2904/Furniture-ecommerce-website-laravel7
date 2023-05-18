@@ -56,7 +56,7 @@ class CategoryController extends Controller
         }
         $data['slug']=$slug;
         $data['is_parent']=$request->input('is_parent',0);
-        // return $data;   
+        // return $data;
         $status=Category::create($data);
         if($status){
             request()->session()->flash('success','Category successfully added');
@@ -133,15 +133,15 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category=Category::findOrFail($id);
-        $child_cat_id=Category::where('parent_id',$id)->pluck('id');
-        // return $child_cat_id;
-        $status=$category->delete();
-        
+        $status =Category::findOrFail($id)->update(['status' => 'inactive']);
+//        $child_cat_id=Category::where('parent_id',$id)->pluck('id');
+//        // return $child_cat_id;
+//        $status=$category->delete();
+
         if($status){
-            if(count($child_cat_id)>0){
-                Category::shiftChild($child_cat_id);
-            }
+//            if(count($child_cat_id)>0){
+//                Category::shiftChild($child_cat_id);
+//            }
             request()->session()->flash('success','Category successfully deleted');
         }
         else{

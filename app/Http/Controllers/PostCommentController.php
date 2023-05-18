@@ -132,7 +132,7 @@ class PostCommentController extends Controller
     {
         $comment=PostComment::find($id);
         if($comment){
-            $status=$comment->delete();
+            $status=$comment->update(['status' => 'inactive']);
             if($status){
                 request()->session()->flash('success','Post Comment successfully deleted');
             }

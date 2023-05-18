@@ -9,22 +9,26 @@
 @if($order)
 <style type="text/css">
   .invoice-header {
-    background: #f7f7f7;
+    background: #f2e880;
     padding: 10px 20px 10px 20px;
     border-bottom: 1px solid gray;
   }
   .site-logo {
     margin-top: 20px;
   }
+
+  .site-logo img {
+      width: 200px;
+  }
   .invoice-right-top h3 {
     padding-right: 20px;
     margin-top: 20px;
-    color: green;
+    color: #000000;
     font-size: 30px!important;
     font-family: serif;
   }
   .invoice-left-top {
-    border-left: 4px solid green;
+    border-left: 4px solid #f2e880;
     padding-left: 20px;
     padding-top: 20px;
   }
@@ -35,12 +39,12 @@
     margin-bottom: 3px;
   }
   thead {
-    background: green;
-    color: #FFF;
+    background: #f2e880;
+    color: #000000;
   }
   .authority h5 {
     margin-top: -10px;
-    color: green;
+    color: black;
   }
   .thanks h4 {
     color: green;
@@ -50,7 +54,7 @@
     margin-top: 20px;
   }
   .site-address p {
-    line-height: 6px;
+
     font-weight: 300;
   }
   .table tfoot .empty {
@@ -74,15 +78,22 @@
       <img src="{{asset('backend/img/logo.png')}}" alt="">
     </div>
     <div class="float-right site-address">
-      <h4>{{env('APP_NAME')}}</h4>
-      <p>{{env('APP_ADDRESS')}}</p>
-      <p>Phone: <a href="tel:{{env('APP_PHONE')}}">{{env('APP_PHONE')}}</a></p>
-      <p>Email: <a href="mailto:{{env('APP_EMAIL')}}">{{env('APP_EMAIL')}}</a></p>
+        @php
+            $settings=DB::table('settings')->first();
+
+        @endphp
+      <span>Phone:{{$settings->phone}}</span><br>
+      <span>Email:{{$settings->email}}</span>
     </div>
     <div class="clearfix"></div>
   </div>
+<div class="invoice-right-top" class="text-right">
+    <h3>Invoice #{{$order->order_number}}</h3>
+    <p>{{ $order->created_at->format('D d m Y') }}</p>
+    {{-- <img class="img-responsive" src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate(route('admin.product.order.show', $order->id )))}}"> --}}
+</div>
   <div class="invoice-description">
-    <div class="invoice-left-top float-left">
+    <div class="invoice-left-top">
       <h6>Invoice to</h6>
        <h3>{{$order->first_name}} {{$order->last_name}}</h3>
        <div class="address">
@@ -97,11 +108,6 @@
          <p><strong>Phone:</strong> {{ $order->phone }}</p>
          <p><strong>Email:</strong> {{ $order->email }}</p>
        </div>
-    </div>
-    <div class="invoice-right-top float-right" class="text-right">
-      <h3>Invoice #{{$order->order_number}}</h3>
-      <p>{{ $order->created_at->format('D d m Y') }}</p>
-      {{-- <img class="img-responsive" src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate(route('admin.product.order.show', $order->id )))}}"> --}}
     </div>
     <div class="clearfix"></div>
   </div>
@@ -119,7 +125,7 @@
       </thead>
       <tbody>
       @foreach($order->cart_info as $cart)
-      @php 
+      @php
         $product=DB::table('products')->select('title')->where('id',$cart->product_id)->get();
       @endphp
         <tr>
@@ -139,13 +145,13 @@
           <th scope="col" class="text-right">Subtotal:</th>
           <th scope="col"> <span>${{number_format($order->sub_total,2)}}</span></th>
         </tr>
-      {{-- @if(!empty($order->coupon))
+       @if(!empty($order->coupon))
         <tr>
           <th scope="col" class="empty"></th>
           <th scope="col" class="text-right">Discount:</th>
-          <th scope="col"><span>-{{$order->coupon->discount(Helper::orderPrice($order->id, $order->user->id))}}{{Helper::base_currency()}}</span></th>
+          <th scope="col"><span>-${{$order->coupon}}</span></th>
         </tr>
-      @endif --}}
+      @endif
         <tr>
           <th scope="col" class="empty"></th>
           @php
@@ -166,12 +172,9 @@
       </tfoot>
     </table>
   </section>
-  <div class="thanks mt-3">
-    <h4>Thank you for your business !!</h4>
-  </div>
   <div class="authority float-right mt-5">
-    <p>-----------------------------------</p>
     <h5>Authority Signature:</h5>
+      <p>BSEATED GLOBAL</p>
   </div>
   <div class="clearfix"></div>
 @else

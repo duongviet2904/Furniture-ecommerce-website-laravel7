@@ -116,9 +116,9 @@ class PostCategoryController extends Controller
     public function destroy($id)
     {
         $postCategory=PostCategory::findOrFail($id);
-       
-        $status=$postCategory->delete();
-        
+
+        $status=$postCategory->update(['status' => 'inactive']);
+
         if($status){
             request()->session()->flash('success','Post Category successfully deleted');
         }

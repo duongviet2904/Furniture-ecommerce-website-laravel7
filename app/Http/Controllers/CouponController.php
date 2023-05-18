@@ -97,7 +97,7 @@ class CouponController extends Controller
             'status'=>'required|in:active,inactive'
         ]);
         $data=$request->all();
-        
+
         $status=$coupon->fill($data)->save();
         if($status){
             request()->session()->flash('success','Coupon Successfully updated');
@@ -106,7 +106,7 @@ class CouponController extends Controller
             request()->session()->flash('error','Please try again!!');
         }
         return redirect()->route('coupon.index');
-        
+
     }
 
     /**
@@ -119,7 +119,7 @@ class CouponController extends Controller
     {
         $coupon=Coupon::find($id);
         if($coupon){
-            $status=$coupon->delete();
+            $status=$coupon->update(['status' => 'inactive']);
             if($status){
                 request()->session()->flash('success','Coupon successfully deleted');
             }

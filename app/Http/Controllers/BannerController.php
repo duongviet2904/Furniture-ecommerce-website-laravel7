@@ -126,9 +126,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        $banner=Banner::findOrFail($id);
-        $status=$banner->delete();
-        if($status){
+        $banner=Banner::findOrFail($id)->update(['status' => 'inactive']);
+        if($banner){
             request()->session()->flash('success','Banner successfully deleted');
         }
         else{

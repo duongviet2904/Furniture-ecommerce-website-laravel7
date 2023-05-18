@@ -48,11 +48,11 @@
 												<ul class="slides">
 													@php
 														$photo=explode(',',$product_detail->photo);
-													// dd($photo);
 													@endphp
 													@foreach($photo as $data)
 														<li data-thumb="{{$data}}" rel="adjustX:10, adjustY:">
-															<img src="{{$data}}" alt="{{$data}}">
+                                                            <div class="product-image-detail" style="background-image: url('{{$data}}');height: 600px;background-repeat: no-repeat;background-position: center;">
+                                                            </div>
 														</li>
 													@endforeach
 												</ul>
@@ -161,6 +161,7 @@
 												<!-- Tab Nav -->
 												<ul class="nav nav-tabs" id="myTab" role="tablist">
 													<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a></li>
+                                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#comments" role="tab">Comments</a></li>
 													<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews</a></li>
 												</ul>
 												<!--/ End Tab Nav -->
@@ -178,6 +179,17 @@
 														</div>
 													</div>
 												</div>
+                                                <div class="tab-pane fade" id="comments" role="tabpanel">
+                                                    <div class="tab-single">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="single-des">
+                                                                    <div class="fb-comments" data-href="https://bseated-global.test/product-detail/{!! ($product_detail->slug) !!}" data-width="1100" data-numposts="10"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 												<!--/ End Description Tab -->
 												<!-- Reviews Tab -->
 												<div class="tab-pane fade" id="reviews" role="tabpanel">
@@ -321,20 +333,16 @@
                                 <!-- Start Single Product -->
                                 <div class="single-product">
                                     <div class="product-img">
-										<a href="{{route('product-detail',$data->slug)}}">
-											@php
-												$photo=explode(',',$data->photo);
-											@endphp
-                                            <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                            <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                        @php
+                                            $photo=explode(',',$data->photo);
+                                        @endphp
+										<a href="{{route('product-detail',$data->slug)}}" class="product-image" style="background-image: url('{{$photo[0]}}')">
                                             <span class="price-dec">{{$data->discount}} % Off</span>
-                                                                    {{-- <span class="out-of-stock">Hot</span> --}}
                                         </a>
                                         <div class="button-head">
                                             <div class="product-action">
                                                 <a data-toggle="modal" data-target="#modelExample" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                                 <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                <a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
                                             </div>
                                             <div class="product-action-2">
                                                 <a title="Add to cart" href="#">Add to cart</a>

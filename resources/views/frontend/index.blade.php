@@ -196,13 +196,15 @@
                                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}">
                                     <div class="single-product">
                                         <div class="product-img">
-                                            <a href="{{route('product-detail',$product->slug)}}">
-                                                @php
-                                                    $photo=explode(',',$product->photo);
-                                                // dd($photo);
-                                                @endphp
-                                                <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                                <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                            @php
+                                                $photo=explode(',',$product->photo);
+                                            @endphp
+                                            <a href="{{route('product-detail',$product->slug)}}" class="product-image" style="background-image: url('{{$photo[0]}}')">
+{{--                                                @php--}}
+{{--                                                    $photo=explode(',',$product->photo);--}}
+{{--                                                @endphp--}}
+{{--                                                <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">--}}
+{{--                                                <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">--}}
                                                 @if($product->stock<=0)
                                                     <span class="out-of-stock">Sale out</span>
                                                 @elseif($product->condition=='new')
