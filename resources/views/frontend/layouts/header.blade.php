@@ -72,12 +72,12 @@
                 <div class="col-lg-6 col-md-5 col-12">
                     <div class="search-bar-top">
                         <div class="search-bar">
-                            <select>
-                                <option >All Category</option>
-                                @foreach(Helper::getAllCategory() as $cat)
-                                    <option>{{$cat->title}}</option>
-                                @endforeach
-                            </select>
+{{--                            <select>--}}
+{{--                                <option >All Category</option>--}}
+{{--                                @foreach(Helper::getAllCategory() as $cat)--}}
+{{--                                    <option>{{$cat->title}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
                             <form method="POST" action="{{route('product.search')}}">
                                 @csrf
                                 <input name="search" placeholder="Search Products Here....." type="search">

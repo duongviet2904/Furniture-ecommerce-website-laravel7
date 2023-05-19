@@ -12,7 +12,8 @@ use Notification;
 use Helper;
 use Illuminate\Support\Str;
 use App\Notifications\StatusNotification;
-
+use App\Mail\SendMail;
+use App\Mail;
 class OrderController extends Controller
 {
     /**
@@ -52,7 +53,9 @@ class OrderController extends Controller
             'coupon'=>'nullable|numeric',
             'phone'=>'numeric|required',
             'post_code'=>'string|nullable',
-            'email'=>'string|required'
+            'email'=>'string|required',
+            'shipping'=>'required',
+            'payment_method'=>'required'
         ]);
         // return $request->all();
 
@@ -187,7 +190,7 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         $this->validate($request,[
-            'status'=>'required|in:new,process,delivered,cancel'
+            'status'=>'required|in:new,process,delivered,cancel,transfer'
         ]);
         $data=$request->all();
         // return $request->status;
@@ -201,7 +204,14 @@ class OrderController extends Controller
         }
         $status=$order->fill($data)->save();
         if($status){
+            if ($order->user_id) {
+                $user = User::find($order->user_id);
+                $mailTo = $user->email;
+            } else {
+                $mailTo = $order->email;
+            }
             request()->session()->flash('success','Successfully updated order');
+            \Illuminate\Support\Facades\Mail::to($mailTo)->send(new SendMail($order));
         }
         else{
             request()->session()->flash('error','Error while updating order');

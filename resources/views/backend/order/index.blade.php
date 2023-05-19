@@ -29,12 +29,14 @@
             </tr>
           </thead>
           <tbody>
+          @php $index = 0; @endphp
             @foreach($orders as $order)
             @php
                 $shipping_charge=DB::table('shippings')->where('id',$order->shipping_id)->pluck('price');
+                $index++;
             @endphp
                 <tr>
-                    <td>{{$order->id}}</td>
+                    <td>{{$index}}</td>
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
@@ -46,6 +48,8 @@
                           <span class="badge badge-primary">{{$order->status}}</span>
                         @elseif($order->status=='process')
                           <span class="badge badge-warning">{{$order->status}}</span>
+                        @elseif($order->status=='transfer')
+                            <span class="badge badge-warning">{{$order->status}}</span>
                         @elseif($order->status=='delivered')
                           <span class="badge badge-success">{{$order->status}}</span>
                         @else

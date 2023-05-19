@@ -89,7 +89,7 @@
 
     <div class="row">
       @php
-          $orders=DB::table('orders')->where('user_id',auth()->user()->id)->paginate(10);
+          $orders=DB::table('orders')->where('user_id',auth()->user()->id)->orderBy('id', 'DESC')->paginate(10);
       @endphp
       <!-- Order -->
       <div class="col-xl-12 col-lg-12">
@@ -108,9 +108,11 @@
           </thead>
           <tbody>
             @if(count($orders)>0)
+                @php $index = 0; @endphp
               @foreach($orders as $order)
-                <tr>
-                    <td>{{$order->id}}</td>
+                  @php $index++; @endphp
+                  <tr>
+                    <td>{{$index}}</td>
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>

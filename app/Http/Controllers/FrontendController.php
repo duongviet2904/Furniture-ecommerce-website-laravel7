@@ -223,29 +223,36 @@ class FrontendController extends Controller
 
     }
     public function productCat(Request $request){
-        $products=Category::getProductByCat($request->slug);
+//        $products=Category::getProductByCat($request->slug);
         // return $request->slug;
+        $products=Product::query();
+        $cat_id=Category::select('id')->where('slug',$request->slug)->first();
+        $products->where('cat_id',$cat_id->id);
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
 
-        if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
+        if(!empty($_GET['show'])){
+            $products=$products->where('status','active')->paginate($_GET['show']);
         }
         else{
-            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
+            $products=$products->where('status','active')->paginate(6);
         }
+        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
 
     }
     public function productSubCat(Request $request){
-        $products=Category::getProductBySubCat($request->sub_slug);
-        // return $products;
+//        $products=Category::getProductBySubCat($request->sub_slug);
+        $products=Product::query();
+        $cat_id=Category::select('id')->where('slug',$request->sub_slug)->first();
+        $products->where('child_cat_id',$cat_id->id);
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
 
-        if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->sub_products)->with('recent_products',$recent_products);
+        if(!empty($_GET['show'])){
+            $products=$products->where('status','active')->paginate($_GET['show']);
         }
         else{
-            return view('frontend.pages.product-lists')->with('products',$products->sub_products)->with('recent_products',$recent_products);
+            $products=$products->where('status','active')->paginate(6);
         }
+        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
 
     }
 

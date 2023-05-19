@@ -12,7 +12,7 @@
     <div class="row">
 
       <!-- Category -->
-      <div class="col-xl-3 col-md-6 mb-4">
+      <div class="col-xl-2 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -29,7 +29,7 @@
       </div>
 
       <!-- Products -->
-      <div class="col-xl-3 col-md-6 mb-4">
+      <div class="col-xl-2 col-md-6 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -46,12 +46,12 @@
       </div>
 
       <!-- Order -->
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
+      <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Order</div>
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Order</div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countActiveOrder()}}</div>
@@ -67,8 +67,49 @@
         </div>
       </div>
 
+        <div class="col-xl-2 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Completed Order</div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countCompletedOrder()}}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-2 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Canceled Order</div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countCanceledOrder()}}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
       <!--Posts-->
-      <div class="col-xl-3 col-md-6 mb-4">
+      <div class="col-xl-2 col-md-6 mb-4">
         <div class="card border-left-warning shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -87,12 +128,11 @@
     <div class="row">
 
       <!-- Area Chart -->
-      <div class="col-xl-8 col-lg-7">
+      <div class="col-xl-6 col-lg-6">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-
+            <h6 class="m-0 font-weight-bold text-primary">Revenue</h6>
           </div>
           <!-- Card Body -->
           <div class="card-body">
@@ -104,30 +144,230 @@
       </div>
 
       <!-- Pie Chart -->
-      <div class="col-xl-4 col-lg-5">
+      <div class="col-xl-6 col-lg-6">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Users</h6>
-          </div>
+{{--          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">--}}
+{{--            <h6 class="m-0 font-weight-bold text-primary">Users</h6>--}}
+{{--          </div>--}}
           <!-- Card Body -->
-          <div class="card-body" style="overflow:hidden">
-            <div id="pie_chart" style="width:350px; height:320px;">
+          <div class="card-body statistic-card" style="overflow:hidden">
+{{--            <div id="pie_chart" style="width:350px; height:320px;">--}}
+              <div class="tab">
+                  <button class="tablinks active" onclick="openCity(event, 'London')">Day</button>
+                  <button class="tablinks" onclick="openCity(event, 'Paris')">Week</button>
+                  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Month</button>
+              </div>
+
+              <div id="London" class="tabcontent statistic-tabcontent" style="display: block">
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <h4>Estimated Revenue: </h4>
+                          $ {{$statistic['statisticDay']['revenue']}}
+                      </div>
+                      <div class="col-lg-6">
+                          <h4>Orders: </h4>
+                          {{$statistic['statisticDay']['countOrderDay']}}
+                      </div>
+                      <div class="col-lg-12">
+                          <h4>Best Sellers: </h4>
+                          <table class="table">
+                              <thead class="thead-dark">
+                              <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Product Name</th>
+                                  <th scope="col">Sold Quantity</th>
+                                  <th scope="col">Stock Remaining</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @if(count($statistic['statisticDay']['productHotDay']))
+                                  @php $index = 0; @endphp
+                                  @foreach($statistic['statisticDay']['productHotDay'] as $product)
+                                      @php $index++; @endphp
+                                      <tr>
+                                          <th scope="row">{{$index}}</th>
+                                          <td>{{$product->title}}</td>
+                                          <td class="text-center">{{$product->sumQty}}</td>
+                                          <td class="text-center">{{$product->stock}}</td>
+                                      </tr>
+                                  @endforeach
+                              @else
+                                  <p class="text-warning">There is no product sold</p>
+                              @endif
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+
+              </div>
+
+              <div id="Tokyo" class="tabcontent statistic-tabcontent">
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <h4>Estimated Revenue: </h4>
+                          $ {{$statistic['statisticMonth']['revenue']}}
+                      </div>
+                      <div class="col-lg-6">
+                          <h4>Orders: </h4>
+                          {{$statistic['statisticMonth']['countOrderMonth']}}
+                      </div>
+                      <div class="col-lg-12">
+                          <h4>Best Sellers: </h4>
+                          <table class="table">
+                              <thead class="thead-dark">
+                              <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Product Name</th>
+                                  <th scope="col">Sold Quantity</th>
+                                  <th scope="col">Stock Remaining</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @if(count($statistic['statisticMonth']['productHotMonth']))
+                                  @php $index = 0; @endphp
+                                  @foreach($statistic['statisticMonth']['productHotMonth'] as $product)
+                                      @php $index++; @endphp
+                                      <tr>
+                                          <th scope="row">{{$index}}</th>
+                                          <td>{{$product->title}}</td>
+                                          <td class="text-center">{{$product->sumQty}}</td>
+                                          <td class="text-center">{{$product->stock}}</td>
+                                      </tr>
+                                  @endforeach
+                              @else
+                                  <p class="text-warning">There is no product sold</p>
+                              @endif
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
+              <div id="Paris" class="tabcontent statistic-tabcontent">
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <h4>Estimated Revenue: </h4>
+                          $ {{$statistic['statisticWeek']['revenue']}}
+                      </div>
+                      <div class="col-lg-6">
+                          <h4>Orders: </h4>
+                          {{$statistic['statisticWeek']['countOrderWeek']}}
+                      </div>
+                      <div class="col-lg-12">
+                          <h4>Best Sellers: </h4>
+                          <table class="table">
+                              <thead class="thead-dark">
+                              <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Product Name</th>
+                                  <th scope="col">Sold Quantity</th>
+                                  <th scope="col">Stock Remaining</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @if(count($statistic['statisticWeek']['productHotWeek']))
+                                  @php $index = 0; @endphp
+                                  @foreach($statistic['statisticWeek']['productHotWeek'] as $product)
+                                      @php $index++; @endphp
+                                      <tr>
+                                          <th scope="row">{{$index}}</th>
+                                          <td>{{$product->title}}</td>
+                                          <td class="text-center">{{$product->sumQty}}</td>
+                                          <td class="text-center">{{$product->stock}}</td>
+                                      </tr>
+                                  @endforeach
+                              @else
+                                  <p class="text-warning">There is no product sold</p>
+                              @endif
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
+              <script>
+                  function openCity(evt, cityName) {
+                      var i, tabcontent, tablinks;
+                      tabcontent = document.getElementsByClassName("tabcontent");
+                      for (i = 0; i < tabcontent.length; i++) {
+                          tabcontent[i].style.display = "none";
+                      }
+                      tablinks = document.getElementsByClassName("tablinks");
+                      for (i = 0; i < tablinks.length; i++) {
+                          tablinks[i].className = tablinks[i].className.replace(" active", "");
+                      }
+                      document.getElementById(cityName).style.display = "block";
+                      evt.currentTarget.className += " active";
+                  }
+              </script>
           </div>
         </div>
       </div>
     </div>
     <!-- Content Row -->
-
   </div>
 @endsection
+
+<style>
+    body {font-family: Arial;}
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+    .statistic-card .tab{
+        background-color: unset;
+        border: none;
+        border-bottom: 1px solid #ccc;
+    }
+    .statistic-card .tabcontent{
+        border: none;
+    }
+
+    .statistic-tabcontent div > div {
+        margin: 15px 0px;
+    }
+</style>
 
 @push('scripts')
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 {{-- pie chart --}}
 <script type="text/javascript">
-  var analytics = <?php echo $users; ?>
+  var analytics = <?php echo ''; ?>
 
   google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawChart);

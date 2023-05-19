@@ -42,9 +42,10 @@
               </tr>
           </tfoot>
           <tbody>
+          @php $index = 1; @endphp
             @foreach($orders as $order)
                 <tr>
-                    <td>{{$order->id}}</td>
+                    <td>{{$index}}</td>
                     <td>{{$order->order_number}}</td>
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
@@ -56,6 +57,8 @@
                           <span class="badge badge-primary">{{$order->status}}</span>
                         @elseif($order->status=='process')
                           <span class="badge badge-warning">{{$order->status}}</span>
+                        @elseif($order->status=='transfer')
+                            <span class="badge badge-warning">{{$order->status}}</span>
                         @elseif($order->status=='delivered')
                           <span class="badge badge-success">{{$order->status}}</span>
                         @else
@@ -70,6 +73,7 @@
                               <button class="btn btn-danger btn-sm dltBtn" data-id={{$order->id}} style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
+                    @php $index++; @endphp
                 </tr>
             @endforeach
           </tbody>

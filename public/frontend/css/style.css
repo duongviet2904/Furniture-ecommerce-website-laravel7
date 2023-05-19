@@ -3422,9 +3422,9 @@ product-area .product-main input.signature-pieces {
 	width:50px;
 	background:#f2e880;
 }
-.shop.checkout .single-widget .content ul{
-	margin-top:30px;
-}
+/*.shop.checkout .single-widget .content ul{*/
+/*	margin-top:30px;*/
+/*}*/
 .shop.checkout .single-widget .content ul li {
 	display: block;
 	padding: 0px 30px;
@@ -3438,8 +3438,8 @@ product-area .product-main input.signature-pieces {
 	float:right;
 }
 .shop.checkout .single-widget .content ul li.last {
-	padding-top: 12px;
-	border-top: 1px solid #ebebeb;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #ebebeb;
 	display: block;
 	font-size: 15px;
 	font-weight: 400;
@@ -3468,7 +3468,7 @@ product-area .product-main input.signature-pieces {
 	text-align: center;
 	border-radius: 0;
 	text-transform: uppercase;
-	color: #fff;
+	color: #000000;
 }
 /*======================================
    End Checkout Form CSS

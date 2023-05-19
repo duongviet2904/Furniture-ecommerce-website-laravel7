@@ -20,6 +20,20 @@ class Order extends Model
         }
         return 0;
     }
+    public static function countCompletedOrder(){
+        $data=Order::where('status', 'delivered')->count();
+        if($data){
+            return $data;
+        }
+        return 0;
+    }
+    public static function countCanceledOrder(){
+        $data=Order::where('status', 'cancel')->count();
+        if($data){
+            return $data;
+        }
+        return 0;
+    }
     public function cart(){
         return $this->hasMany(Cart::class);
     }
