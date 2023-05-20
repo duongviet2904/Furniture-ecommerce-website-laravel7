@@ -58,8 +58,16 @@
           </select>
         </div>
 
+          <div class="form-group">
+              <label for="import_price" class="col-form-label">Import Price(NRS) <span class="text-danger">*</span></label>
+              <input id="import_price" type="number" name="import_price" placeholder="Enter price"  value="{{old('import_price')}}" class="form-control">
+              @error('import_price')
+              <span class="text-danger">{{$message}}</span>
+              @enderror
+          </div>
+
         <div class="form-group">
-          <label for="price" class="col-form-label">Price(NRS) <span class="text-danger">*</span></label>
+          <label for="price" class="col-form-label">Sell Price(NRS) <span class="text-danger">*</span></label>
           <input id="price" type="number" name="price" placeholder="Enter price"  value="{{old('price')}}" class="form-control">
           @error('price')
           <span class="text-danger">{{$message}}</span>

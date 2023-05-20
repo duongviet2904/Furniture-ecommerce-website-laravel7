@@ -35,15 +35,22 @@ class AdminController extends Controller
             ->whereDay('created_at', $day)
             ->where('status', '!=', 'cancel')
             ->first();
+        $incomeDay = Order::with(['cart_info'])
+            ->join('shippings', 'shippings.id', '=', 'orders.shipping_id')
+            ->select(\DB::raw("SUM(total_amount - import_amount) - sum(shippings.price) as income"))
+            ->whereDay('orders.created_at', $day)
+            ->where('orders.status', '!=', 'cancel')
+            ->first();
         $countOrderDay = Order::with(['cart_info'])
             ->select(\DB::raw("COUNT(*) as countOrderDay"), \DB::raw("SUM(quantity) as countProduct"))
             ->where('status', '!=', 'cancel')
             ->whereDay('created_at', $day)
             ->first();
-        $productIdHotDay = Cart::select(\DB::raw("carts.product_id, products.title, products.stock, SUM(carts.quantity) as sumQty"))
+        $productIdHotDay = Cart::select(\DB::raw("carts.product_id, products.title, products.stock, products.price * (1 - products.discount / 100) as price, products.import_price, SUM(carts.quantity) as sumQty"))
             ->join('products', 'carts.product_id', '=', 'products.id')
             ->join('orders', 'carts.order_id', '=', 'orders.id')
             ->whereDay('orders.created_at', $day)
+            ->where('orders.status', '!=', 'cancel')
             ->groupBy('carts.product_id')
             ->orderBy('sumQty', 'desc')
             ->skip(0)->take(4)
@@ -55,15 +62,22 @@ class AdminController extends Controller
             ->whereMonth('created_at', $month)
             ->where('status', '!=', 'cancel')
             ->first();
+        $incomeMonth = Order::with(['cart_info'])
+            ->join('shippings', 'shippings.id', '=', 'orders.shipping_id')
+            ->select(\DB::raw("SUM(total_amount - import_amount) - sum(shippings.price) as income"))
+            ->whereMonth('orders.created_at', $month)
+            ->where('orders.status', '!=', 'cancel')
+            ->first();
         $countOrderMonth = Order::with(['cart_info'])
             ->select(\DB::raw("COUNT(*) as countOrderMonth"), \DB::raw("SUM(quantity) as countProduct"))
             ->where('status', '!=', 'cancel')
             ->whereMonth('created_at', $month)
             ->first();
-        $productIdHotMonth = Cart::select(\DB::raw("carts.product_id, products.title, products.stock, SUM(carts.quantity) as sumQty"))
+        $productIdHotMonth = Cart::select(\DB::raw("carts.product_id, products.title, products.stock, products.price * (1 - products.discount / 100) as price, products.import_price, SUM(carts.quantity) as sumQty"))
             ->join('products', 'carts.product_id', '=', 'products.id')
             ->join('orders', 'carts.order_id', '=', 'orders.id')
             ->whereMonth('orders.created_at', $month)
+            ->where('orders.status', '!=', 'cancel')
             ->groupBy('carts.product_id')
             ->orderBy('sumQty', 'desc')
             ->skip(0)->take(4)
@@ -75,15 +89,22 @@ class AdminController extends Controller
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->where('status', '!=', 'cancel')
             ->first();
+        $incomeWeek = Order::with(['cart_info'])
+            ->join('shippings', 'shippings.id', '=', 'orders.shipping_id')
+            ->select(\DB::raw("SUM(total_amount - import_amount) - sum(shippings.price) as income"))
+            ->whereBetween('orders.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->where('orders.status', '!=', 'cancel')
+            ->first();
         $countOrderWeek = Order::with(['cart_info'])
             ->select(\DB::raw("COUNT(*) as countOrderWeek"), \DB::raw("SUM(quantity) as countProduct"))
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->where('status', '!=', 'cancel')
             ->first();
-        $productIdHotWeek = Cart::select(\DB::raw("carts.product_id, products.title, products.stock, SUM(carts.quantity) as sumQty"))
+        $productIdHotWeek = Cart::select(\DB::raw("carts.product_id, products.title, products.stock, products.price * (1 - products.discount / 100)  as price, products.import_price, SUM(carts.quantity) as sumQty"))
             ->join('products', 'carts.product_id', '=', 'products.id')
             ->join('orders', 'carts.order_id', '=', 'orders.id')
             ->whereBetween('orders.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->where('orders.status', '!=', 'cancel')
             ->groupBy('carts.product_id')
             ->orderBy('sumQty', 'desc')
             ->skip(0)->take(4)
@@ -93,16 +114,19 @@ class AdminController extends Controller
         return view('backend.index')->with('statistic', [
             'statisticDay' => [
                 'revenue' => $revenueDay->revenueDay,
+                'income' => $incomeDay->income,
                 'countOrderDay' => $countOrderDay->countOrderDay,
                 'productHotDay' => $productIdHotDay
             ],
             'statisticWeek' => [
                 'revenue' => $revenueWeek->revenueWeek,
+                'income' => $incomeWeek->income,
                 'countOrderWeek' => $countOrderWeek->countOrderWeek,
                 'productHotWeek' => $productIdHotWeek
             ],
             'statisticMonth' => [
                 'revenue' => $revenueMonth->revenueMonth,
+                'income' => $incomeMonth->income,
                 'countOrderMonth' => $countOrderMonth->countOrderMonth,
                 'productHotMonth' => $productIdHotMonth
             ]

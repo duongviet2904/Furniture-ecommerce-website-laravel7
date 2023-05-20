@@ -192,12 +192,7 @@ class FrontendController extends Controller
             if(!empty($data['price_range'])){
                 $priceRangeURL .='&price='.$data['price_range'];
             }
-            if(request()->is('e-shop.loc/product-grids')){
-                return redirect()->route('product-grids',$catURL.$brandURL.$priceRangeURL.$showURL.$sortByURL);
-            }
-            else{
-                return redirect()->route('product-lists',$catURL.$brandURL.$priceRangeURL.$showURL.$sortByURL);
-            }
+        return redirect()->route('product-grids',$catURL.$brandURL.$priceRangeURL.$showURL.$sortByURL);
     }
     public function productSearch(Request $request){
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
@@ -212,14 +207,18 @@ class FrontendController extends Controller
     }
 
     public function productBrand(Request $request){
-        $products=Brand::getProductByBrand($request->slug);
+        $products=Product::query();
+        $brand=Brand::select('id')->where('slug',$request->slug)->first();
+        $products->where('brand_id',$brand->id);
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
+
+        if(!empty($_GET['show'])){
+            $products=$products->where('status','active')->paginate($_GET['show']);
         }
         else{
-            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
+            $products=$products->where('status','active')->paginate(6);
         }
+        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
 
     }
     public function productCat(Request $request){

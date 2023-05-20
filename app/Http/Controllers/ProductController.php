@@ -59,6 +59,7 @@ class ProductController extends Controller
             'status'=>'required|in:active,inactive',
             'condition'=>'required|in:default,new,hot',
             'price'=>'required|numeric',
+            'import_price'=>'numeric',
             'discount'=>'nullable|numeric'
         ]);
 
@@ -143,6 +144,7 @@ class ProductController extends Controller
             'status'=>'required|in:active,inactive',
             'condition'=>'required|in:default,new,hot',
             'price'=>'required|numeric',
+            'import_price'=>'numeric',
             'discount'=>'nullable|numeric'
         ]);
 

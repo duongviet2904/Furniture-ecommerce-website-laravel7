@@ -22,7 +22,8 @@
               <th>Title</th>
               <th>Category</th>
               <th>Is Featured</th>
-              <th>Price</th>
+              <th>Import Price</th>
+              <th>Sell Price</th>
               <th>Discount</th>
               <th>Condition</th>
               <th>Brand</th>
@@ -49,6 +50,7 @@
                       </sub>
                     </td>
                     <td>{{(($product->is_featured==1)? 'Yes': 'No')}}</td>
+                    <td>Rs. {{$product->import_price}} /-</td>
                     <td>Rs. {{$product->price}} /-</td>
                     <td>  {{$product->discount}}% OFF</td>
                     <td>{{$product->condition}}</td>

@@ -115,6 +115,19 @@ class Helper{
             return 0;
         }
     }
+
+    public static function totalImportCartPrice($user_id=''){
+        if(Auth::check()){
+            if($user_id=="") $user_id=auth()->user()->id;
+            $result =  Cart::select(\DB::raw("sum(quantity * import_price) as import_amount"))
+                ->where('user_id',$user_id)->whereNull('order_id')->first();
+            return $result->import_amount;
+        }
+        else{
+            return 0;
+        }
+    }
+
     // Wishlist Count
     public static function wishlistCount($user_id=''){
 

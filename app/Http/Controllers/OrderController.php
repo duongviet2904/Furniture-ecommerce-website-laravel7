@@ -55,7 +55,7 @@ class OrderController extends Controller
             'post_code'=>'string|nullable',
             'email'=>'string|required',
             'shipping'=>'required',
-            'payment_method'=>'required'
+            'payment_method'=>'required',
         ]);
         // return $request->all();
 
@@ -119,6 +119,7 @@ class OrderController extends Controller
                 $order_data['total_amount']=Helper::totalCartPrice();
             }
         }
+        $order_data['import_amount']=Helper::totalImportCartPrice();
         // return $order_data['total_amount'];
         $order_data['status']="new";
         if(request('payment_method')=='paypal'){

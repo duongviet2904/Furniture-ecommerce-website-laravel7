@@ -10,14 +10,43 @@
 
     <!-- Content Row -->
     <div class="row">
-
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Revenue</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{\App\Models\Order::countRevenue()}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">NET Income</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{\App\Models\Order::countNetIncome()}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
       <!-- Category -->
-      <div class="col-xl-2 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Category</div>
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Category</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Category::countActiveCategory()}}</div>
               </div>
               <div class="col-auto">
@@ -29,12 +58,12 @@
       </div>
 
       <!-- Products -->
-      <div class="col-xl-2 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Products</div>
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Products</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{\App\Models\Product::countActiveProduct()}}</div>
               </div>
               <div class="col-auto">
@@ -46,12 +75,12 @@
       </div>
 
       <!-- Order -->
-      <div class="col-xl-2 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Order</div>
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Order</div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countActiveOrder()}}</div>
@@ -67,12 +96,12 @@
         </div>
       </div>
 
-        <div class="col-xl-2 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Completed Order</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Completed Order</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countCompletedOrder()}}</div>
@@ -88,12 +117,12 @@
             </div>
         </div>
 
-        <div class="col-xl-2 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Canceled Order</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Canceled Order</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{\App\Models\Order::countCanceledOrder()}}</div>
@@ -109,7 +138,7 @@
             </div>
         </div>
       <!--Posts-->
-      <div class="col-xl-2 col-md-6 mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-warning shadow h-100 py-2">
           <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -161,12 +190,16 @@
 
               <div id="London" class="tabcontent statistic-tabcontent" style="display: block">
                   <div class="row">
-                      <div class="col-lg-6">
-                          <h4>Estimated Revenue: </h4>
+                      <div class="col-lg-4">
+                          <h4>ET Revenue: </h4>
                           $ {{$statistic['statisticDay']['revenue']}}
                       </div>
-                      <div class="col-lg-6">
-                          <h4>Orders: </h4>
+                      <div class="col-lg-4">
+                          <h4>ET NET Income: </h4>
+                          $ {{$statistic['statisticDay']['income']}}
+                      </div>
+                      <div class="col-lg-4">
+                          <h4>New Orders: </h4>
                           {{$statistic['statisticDay']['countOrderDay']}}
                       </div>
                       <div class="col-lg-12">
@@ -176,6 +209,8 @@
                               <tr>
                                   <th scope="col">#</th>
                                   <th scope="col">Product Name</th>
+                                  <th scope="col">Import Price</th>
+                                  <th scope="col">Sell Price</th>
                                   <th scope="col">Sold Quantity</th>
                                   <th scope="col">Stock Remaining</th>
                               </tr>
@@ -188,6 +223,8 @@
                                       <tr>
                                           <th scope="row">{{$index}}</th>
                                           <td>{{$product->title}}</td>
+                                          <td>$ {{$product->import_price}}</td>
+                                          <td>$ {{$product->price}}</td>
                                           <td class="text-center">{{$product->sumQty}}</td>
                                           <td class="text-center">{{$product->stock}}</td>
                                       </tr>
@@ -204,12 +241,16 @@
 
               <div id="Tokyo" class="tabcontent statistic-tabcontent">
                   <div class="row">
-                      <div class="col-lg-6">
-                          <h4>Estimated Revenue: </h4>
+                      <div class="col-lg-4">
+                          <h4>ET Revenue: </h4>
                           $ {{$statistic['statisticMonth']['revenue']}}
                       </div>
-                      <div class="col-lg-6">
-                          <h4>Orders: </h4>
+                      <div class="col-lg-4">
+                          <h4>ET NET Income: </h4>
+                          $ {{$statistic['statisticMonth']['income']}}
+                      </div>
+                      <div class="col-lg-4">
+                          <h4>New Orders: </h4>
                           {{$statistic['statisticMonth']['countOrderMonth']}}
                       </div>
                       <div class="col-lg-12">
@@ -219,6 +260,8 @@
                               <tr>
                                   <th scope="col">#</th>
                                   <th scope="col">Product Name</th>
+                                  <th scope="col">Import Price</th>
+                                  <th scope="col">Sell Price</th>
                                   <th scope="col">Sold Quantity</th>
                                   <th scope="col">Stock Remaining</th>
                               </tr>
@@ -231,6 +274,8 @@
                                       <tr>
                                           <th scope="row">{{$index}}</th>
                                           <td>{{$product->title}}</td>
+                                          <td>$ {{$product->import_price}}</td>
+                                          <td>$ {{$product->price}}</td>
                                           <td class="text-center">{{$product->sumQty}}</td>
                                           <td class="text-center">{{$product->stock}}</td>
                                       </tr>
@@ -246,12 +291,16 @@
 
               <div id="Paris" class="tabcontent statistic-tabcontent">
                   <div class="row">
-                      <div class="col-lg-6">
-                          <h4>Estimated Revenue: </h4>
+                      <div class="col-lg-4">
+                          <h4>ET Revenue: </h4>
                           $ {{$statistic['statisticWeek']['revenue']}}
                       </div>
-                      <div class="col-lg-6">
-                          <h4>Orders: </h4>
+                      <div class="col-lg-4">
+                          <h4>ET NET Income: </h4>
+                          $ {{$statistic['statisticWeek']['income']}}
+                      </div>
+                      <div class="col-lg-4">
+                          <h4>New Orders: </h4>
                           {{$statistic['statisticWeek']['countOrderWeek']}}
                       </div>
                       <div class="col-lg-12">
@@ -261,6 +310,8 @@
                               <tr>
                                   <th scope="col">#</th>
                                   <th scope="col">Product Name</th>
+                                  <th scope="col">Import Price</th>
+                                  <th scope="col">Sell Price</th>
                                   <th scope="col">Sold Quantity</th>
                                   <th scope="col">Stock Remaining</th>
                               </tr>
@@ -273,6 +324,8 @@
                                       <tr>
                                           <th scope="row">{{$index}}</th>
                                           <td>{{$product->title}}</td>
+                                          <td>$ {{$product->import_price}}</td>
+                                          <td>$ {{$product->price}}</td>
                                           <td class="text-center">{{$product->sumQty}}</td>
                                           <td class="text-center">{{$product->stock}}</td>
                                       </tr>
